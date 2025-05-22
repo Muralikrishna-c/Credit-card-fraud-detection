@@ -1,0 +1,32 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+struct Transaction {
+    double amount;
+    std::string location;
+    bool isForeign;
+    bool isHighRiskCountry;
+};
+
+bool detectFraud(const Transaction& tx) {
+    if (tx.amount > 10000) return true;
+    if (tx.isForeign && tx.isHighRiskCountry) return true;
+    return false;
+}
+
+int main() {
+    std::vector<Transaction> transactions = {
+        {15000, "USA", false, false},
+        {100, "Nigeria", true, true},
+        {50, "USA", false, false}
+    };
+
+    for (const auto& tx : transactions) {
+        bool fraud = detectFraud(tx);
+        std::cout << "Transaction of $" << tx.amount << " is "
+                  << (fraud ? "FRAUDULENT" : "legitimate") << ".\n";
+    }
+
+    return 0;
+}
